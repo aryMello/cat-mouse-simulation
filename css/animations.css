@@ -1,0 +1,270 @@
+/* Animation Definitions */
+
+/* Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Bounce */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Spin */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scale In */
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Slide In From Right */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Glow */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px currentColor;
+    }
+    50% {
+        box-shadow: 0 0 20px currentColor;
+    }
+}
+
+/* Applied Animations */
+
+.panel {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.panel:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.panel:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.panel:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.panel:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.status-indicator.detected {
+    animation: pulse 2s infinite;
+}
+
+.stat-value {
+    transition: all 0.3s ease;
+}
+
+.stat-value.updated {
+    animation: bounce 0.5s ease;
+}
+
+/* Canvas Fade In */
+.canvas-container {
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* Comparison Cards */
+.comparison-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.comparison-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.comparison-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.comparison-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Hover Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Config Panel Slide */
+#configPanel {
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Stat Update Flash */
+@keyframes flash {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(59, 130, 246, 0.3);
+    }
+}
+
+.stat-item.flash {
+    animation: flash 0.5s ease;
+}
+
+/* Loading Spinner */
+@keyframes spinLoader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spinLoader 1s linear infinite;
+}
+
+/* Capture Success Animation */
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.capture-success {
+    animation: successPulse 0.6s ease;
+}
+
+/* Strategy Change Transition */
+.strategy-description {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.strategy-description.changing {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+/* Range Slider Thumb Animation */
+input[type="range"]::-webkit-slider-thumb {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px var(--accent-blue);
+}
+
+input[type="range"]::-moz-range-thumb {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px var(--accent-blue);
+}
+
+/* Legend Item Hover */
+.legend-item {
+    transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+    transform: translateX(5px);
+}
+
+/* Button Icon Rotation on Hover */
+.btn-secondary .icon {
+    transition: transform 0.3s ease;
+}
+
+.btn-secondary:hover .icon {
+    transform: rotate(15deg);
+}
+
+/* Smooth Property Transitions */
+* {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: 150ms;
+}

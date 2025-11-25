@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação Ligeirinho vs Frajola</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>O Rato Mais Rápido de Todo o México</h1>
+            <p class="subtitle">Simulação de Detecção e Perseguição: Ligeirinho vs Frajola</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Canvas Section -->
+            <div class="canvas-section">
+                <div class="canvas-container">
+                    <canvas id="simulationCanvas" width="800" height="600"></canvas>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <button id="playPauseBtn" class="btn btn-primary">
+                        <span class="icon" id="playPauseIcon">▶</span>
+                        <span id="playPauseText">Iniciar</span>
+                    </button>
+                    <button id="resetBtn" class="btn btn-secondary">
+                        <span class="icon">↻</span>
+                        Resetar
+                    </button>
+                    <button id="configBtn" class="btn btn-secondary">
+                        <span class="icon">⚙</span>
+                        Configurar
+                    </button>
+                    <button id="exportBtn" class="btn btn-secondary">
+                        <span class="icon">↓</span>
+                        Exportar Dados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Statistics -->
+                <div class="panel stats-panel">
+                    <h3>Estatísticas</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Tentativas</div>
+                            <div class="stat-value" id="statAttempts">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Capturas</div>
+                            <div class="stat-value stat-success" id="statCaptures">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Taxa de Sucesso</div>
+                            <div class="stat-value" id="statSuccessRate">0%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Tempo Médio</div>
+                            <div class="stat-value" id="statAvgTime">0.00s</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Tempo Atual</div>
+                            <div class="stat-value" id="statCurrentTime">0.00s</div>
+                        </div>
+                        <div class="stat-item full-width">
+                            <div class="detection-status" id="detectionStatus">
+                                <span class="status-indicator"></span>
+                                <span class="status-text">Aguardando início</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategy Selection -->
+                <div class="panel strategy-panel">
+                    <h3>Estratégia de Perseguição</h3>
+                    <select id="strategySelect" class="select-control">
+                        <option value="direct">Perseguição Direta</option>
+                        <option value="predictive">Perseguição Preditiva</option>
+                        <option value="patrol">Patrulha + Perseguição</option>
+                    </select>
+                    <p class="strategy-description" id="strategyDescription">
+                        Move diretamente em direção ao alvo atual
+                    </p>
+                </div>
+
+                <!-- Configuration Panel (Hidden by default) -->
+                <div class="panel config-panel" id="configPanel" style="display: none;">
+                    <h3>Configurações</h3>
+                    <div class="config-group">
+                        <label for="targetSpeedSlider">
+                            Velocidade Ligeirinho: <span id="targetSpeedValue">10</span>px/frame
+                        </label>
+                        <input type="range" id="targetSpeedSlider" min="5" max="20" value="10" step="1">
+                    </div>
+                    <div class="config-group">
+                        <label for="chaserSpeedSlider">
+                            Velocidade Frajola: <span id="chaserSpeedValue">7</span>px/frame
+                        </label>
+                        <input type="range" id="chaserSpeedSlider" min="3" max="15" value="7" step="1">
+                    </div>
+                    <div class="config-group">
+                        <label for="detectionSlider">
+                            Sensibilidade Detecção: <span id="detectionValue">80</span>%
+                        </label>
+                        <input type="range" id="detectionSlider" min="30" max="150" value="80" step="10">
+                    </div>
+                    <div class="config-group">
+                        <label for="fpsSlider">
+                            Taxa de Atualização: <span id="fpsValue">60</span> FPS
+                        </label>
+                        <input type="range" id="fpsSlider" min="30" max="120" value="60" step="10">
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="panel legend-panel">
+                    <h3>Legenda</h3>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <span class="legend-color target-color"></span>
+                            <span>Ligeirinho (Alvo)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color chaser-color"></span>
+                            <span>Frajola (Perseguidor)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color detection-color"></span>
+                            <span>Raio de Detecção</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color pursuit-color"></span>
+                            <span>Linha de Perseguição</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Comparative Analysis Section -->
+        <section class="comparison-section">
+            <h2>Análise Comparativa de Estratégias</h2>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Perseguição Direta</h4>
+                    <p class="comparison-desc">Simples e reativa, move diretamente ao alvo.</p>
+                    <ul class="comparison-list">
+                        <li class="pro">✓ Simples de implementar</li>
+                        <li class="pro">✓ Baixo custo computacional</li>
+                        <li class="con">✗ Não prevê movimentos</li>
+                        <li class="con">✗ Pode ser facilmente driblado</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h4>Perseguição Preditiva</h4>
+                    <p class="comparison-desc">Calcula trajetória futura e intercepta.</p>
+                    <ul class="comparison-list">
+                        <li class="pro">✓ Maior taxa de sucesso</li>
+                        <li class="pro">✓ Melhor contra alvos rápidos</li>
+                        <li class="con">✗ Vulnerável a mudanças bruscas</li>
+                        <li class="neutral">~ Complexidade moderada</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h4>Patrulha + Perseguição</h4>
+                    <p class="comparison-desc">Patrulha área quando não detecta alvo.</p>
+                    <ul class="comparison-list">
+                        <li class="pro">✓ Mantém cobertura da área</li>
+                        <li class="pro">✓ Bom para alvos perdidos</li>
+                        <li class="con">✗ Tempo de reação maior</li>
+                        <li class="con">✗ Menos eficiente inicialmente</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Debug Panel (Hidden by default, toggle with 'D' key) -->
+    <div id="debugPanel" class="debug-panel" style="display: none;">
+        <h4>Debug Info</h4>
+        <div id="debugContent"></div>
+    </div>
+
+    <!-- Scripts - Load in order -->
+    <script src="js/utils/Vector2D.js"></script>
+    <script src="js/utils/MathUtils.js"></script>
+    <script src="js/utils/Logger.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/agents/Agent.js"></script>
+    <script src="js/agents/Ligeirinho.js"></script>
+    <script src="js/agents/Frajola.js"></script>
+    <script src="js/strategies/Strategy.js"></script>
+    <script src="js/strategies/DirectStrategy.js"></script>
+    <script src="js/strategies/PredictiveStrategy.js"></script>
+    <script src="js/strategies/PatrolStrategy.js"></script>
+    <script src="js/systems/DetectionSystem.js"></script>
+    <script src="js/systems/PhysicsEngine.js"></script>
+    <script src="js/systems/CollisionDetector.js"></script>
+    <script src="js/rendering/Renderer.js"></script>
+    <script src="js/rendering/UIRenderer.js"></script>
+    <script src="js/analytics/StatsTracker.js"></script>
+    <script src="js/analytics/DataExporter.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -7,8 +7,8 @@
 const CONFIG = {
     // Canvas
     canvas: {
-        width: 800,
-        height: 600,
+        width: 1400,
+        height: 900,
         backgroundColor: '#1f2937',
         gridColor: '#374151',
         gridSize: 50
@@ -16,32 +16,32 @@ const CONFIG = {
 
     // Ligeirinho (Alvo)
     target: {
-        size: 20,
+        size: 80,
         color: '#ef4444',
         velocityColor: '#ef4444',
         speedMin: 8,
         speedMax: 15,
-        defaultSpeed: 10,
+        defaultSpeed: 8,
         // Porcentagem do tamanho em relação ao canvas
         sizePercentage: 2.5
     },
 
     // Frajola (Perseguidor)
     chaser: {
-        size: 45,
+        size: 150,
         color: '#3b82f6',
         velocityColor: '#3b82f6',
         speedMin: 3,
         speedMax: 15,
-        defaultSpeed: 7,
-        detectionRadius: 150,
-        startX: 400, // Centro do canvas
-        startY: 300
+        defaultSpeed: 9,
+        detectionRadius: 300,
+        startX: 700, // Centro do canvas
+        startY: 450
     },
 
     // Sistema de Detecção
     detection: {
-        baseSensitivity: 0.8,
+        baseSensitivity: 0.9,
         minSensitivity: 0.3,
         maxSensitivity: 1.5,
         detectedColor: '#22c55e40',
@@ -53,8 +53,8 @@ const CONFIG = {
 
     // Sistema de Física
     physics: {
-        captureDistance: 20,
-        boundaryMargin: 50,
+        captureDistance: 60,
+        boundaryMargin: 100,
         friction: 0.98,
         maxVelocity: 20
     },
@@ -64,7 +64,7 @@ const CONFIG = {
         defaultFPS: 60,
         minFPS: 30,
         maxFPS: 120,
-        captureDelay: 1000, // ms antes de reiniciar após captura
+        captureDelay: 2000, // ms antes de reiniciar após captura
         debug: false
     },
 

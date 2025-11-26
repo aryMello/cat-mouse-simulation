@@ -23,6 +23,9 @@ class Ligeirinho extends Agent {
         this.spawnEdge = null;
         this.escapeAttempts = 0;
         
+        // Carregar imagem do Ligeirinho
+        this.loadImage('./assets/ligeirinho.png');
+        
         logger.info('Ligeirinho criado', {
             position: this.position.toString(),
             speed: this.maxSpeed

@@ -30,6 +30,7 @@ class Agent {
         // Propriedades visuais
         this.color = options.color || '#ffffff';
         this.velocityColor = options.velocityColor || this.color;
+        this.image = options.image || null; // Para renderização com PNG
         
         // Estado
         this.active = true;
@@ -128,16 +129,55 @@ class Agent {
     draw(ctx) {
         if (!this.visible) return;
         
-        // Desenhar corpo
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.size / 2, 0, Math.PI * 2);
-        ctx.fill();
+        // Se tem imagem, desenhar imagem em vez de círculo
+        if (this.image && this.image.complete) {
+            ctx.save();
+            ctx.translate(this.position.x, this.position.y);
+            
+            // Calcular rotação baseada na velocidade
+            if (this.velocity.magnitude() > 0.1) {
+                const angle = this.velocity.angle();
+                ctx.rotate(angle);
+            }
+            
+            // Desenhar imagem centralizada
+            ctx.drawImage(
+                this.image,
+                -this.size / 2,
+                -this.size / 2,
+                this.size,
+                this.size
+            );
+            
+            ctx.restore();
+        } else {
+            // Fallback: desenhar círculo se imagem não estiver disponível
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
         
         // Desenhar vetor de velocidade se configurado
         if (CONFIG.visualization.showVelocityVectors && this.velocity.magnitude() > 0.1) {
             this.drawVelocityVector(ctx);
         }
+    }
+
+    /**
+     * Carrega uma imagem para o agente
+     * @param {string} imagePath - Caminho da imagem
+     */
+    loadImage(imagePath) {
+        const img = new Image();
+        img.src = imagePath;
+        img.onload = () => {
+            this.image = img;
+            logger.debug(`Imagem carregada para agente ${this.id}`, { src: imagePath });
+        };
+        img.onerror = () => {
+            logger.warn(`Erro ao carregar imagem para agente ${this.id}`, { src: imagePath });
+        };
     }
 
     /**

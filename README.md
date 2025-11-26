@@ -8,6 +8,8 @@ Simulação computacional que modela a interação entre dois agentes animados e
 - **Ligeirinho** (Alvo): Agente rápido que cruza o canvas em trajetórias lineares
 - **Frajola** (Perseguidor): Agente que detecta e intercepta o alvo usando diferentes estratégias
 
+![preview](./assets/preview.gif)
+
 ---
 
 ## Como Executar

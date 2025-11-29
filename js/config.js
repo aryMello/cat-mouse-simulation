@@ -7,7 +7,7 @@
 const CONFIG = {
     // Canvas
     canvas: {
-        width: 1400,
+        width: 1600,
         height: 900,
         backgroundColor: '#1f2937',
         gridColor: '#374151',

@@ -28,6 +28,7 @@ class UIRenderer {
             statSuccessRate: document.getElementById('statSuccessRate'),
             statAvgTime: document.getElementById('statAvgTime'),
             statCurrentTime: document.getElementById('statCurrentTime'),
+            statTotalTime: document.getElementById('statTotalTime'),
             detectionStatus: document.getElementById('detectionStatus'),
             
             // Controles
@@ -83,6 +84,7 @@ class UIRenderer {
         );
         this.setText(this.elements.statAvgTime, `${stats.avgTime.toFixed(2)}s`);
         this.setText(this.elements.statCurrentTime, `${stats.currentTime.toFixed(2)}s`);
+        this.setText(this.elements.statTotalTime, `${stats.totalSimulationTime.toFixed(2)}s`);
 
         // Animação de atualização
         this.flashElement(this.elements.statCurrentTime);

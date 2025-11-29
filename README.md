@@ -119,6 +119,7 @@ Cada estratégia implementa lógica específica:
 ## Equipe
 
 @aryMello
+@drotgalvao
 
 ---
 
